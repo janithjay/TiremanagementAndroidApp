@@ -8,6 +8,7 @@ import Navbar from './NavBar';
 import { auth, db } from '../../FirebaseConfig'; //firebase configeration import
 import { get, ref } from 'firebase/database';
 import { useDarkMode } from './DarkModeContext';//dark mode status
+import { useNotification } from "./notificationContext";
 
 //define pages
 type RootStackParamList = {
@@ -31,6 +32,13 @@ type Props = NativeStackScreenProps<RootStackParamList, 'EmployeeHome'>; //defin
 const EmployeeHome: React.FC<Props> = ({ navigation }) => {
   const [authuser, setAuthUser] = useState<AuthUser | null>(null);
   const { isDarkMode } = useDarkMode();
+  const { notification, expoPushToken, error } = useNotification();
+
+  if(error){
+    console.log('Error in fetching user data:', error.message);
+    return null; // Return null or display an error message to the user
+  }
+  console.log(JSON.stringify(notification, null, 2));
 
   useEffect(() => {
     const fetchAuthUser = async () => {

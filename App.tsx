@@ -13,9 +13,18 @@ import ProfileEdit from './app/screens/ProfileEdit';
 import TireCheckList from './app/screens/TireCheckList';
 import TireManagement from './app/screens/TireManagement';
 import VehicleManagement from './app/screens/VehicleManagement';
-import Administrative from './app/screens/Administrative';
 import Settings from './app/screens/Settings';
 import { DarkModeProvider } from './app/screens/DarkModeContext';
+import { NotificationProvider } from './app/screens/notificationContext';
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
 
 
 
@@ -39,6 +48,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
+    <NotificationProvider>
     <DarkModeProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
@@ -53,11 +63,11 @@ export default function App() {
           <Stack.Screen options={{ headerShown: false }} name="TireCheckList" component={TireCheckList} />
           <Stack.Screen options={{ headerShown: false }} name="TireManagement" component={TireManagement} />
           <Stack.Screen options={{ headerShown: false }} name="VehicleManagement" component={VehicleManagement} />
-          <Stack.Screen options={{ headerShown: false }} name="Administrative" component={Administrative} />
           <Stack.Screen options={{ headerShown: false }} name="Settings" component={Settings} />
         </Stack.Navigator>
       </NavigationContainer>
     </DarkModeProvider>
+    </NotificationProvider>
   );
 }
 

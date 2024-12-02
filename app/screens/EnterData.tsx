@@ -69,7 +69,7 @@ const EnterData = () => {
     }
   
     // Update the vehicle number with the prefix and numeric part
-    setVehicleNo(`${prefix}${numericPart.slice(0, 4)}`);
+    setVehicleNo(`${prefix}${numericPart.slice(0, )}`);
   };
 
   const handleTireNoChange = (text: string) => {
@@ -162,6 +162,18 @@ const handleTyrePressureChange = (text: string) => {
 
 
   const handleFormSubmit = () => {
+
+    if (
+      errorMessage1 ||
+      errorMessage2 ||
+      errorMessage3 ||
+      errorMessage4 ||
+      errorMessage5
+    ) {
+      Alert.alert('Please resolve all validation errors before submitting.');
+      return;
+    }
+    
     if (
       !tireNo ||
       !vehicleNo ||
@@ -171,7 +183,8 @@ const handleTyrePressureChange = (text: string) => {
       !selectedOption1 ||
       !selectedOption2 ||
       !selectedOption3 ||
-      !kmReading
+      !kmReading 
+      
     ) {
       Alert.alert('Please fill in all required fields');
       return;

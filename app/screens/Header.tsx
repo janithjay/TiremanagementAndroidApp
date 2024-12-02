@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
   toggleButtonImage: {
     width: 30,
     height: 30,
+    
   },
   logoContainer: {
     alignItems: 'baseline',
@@ -200,7 +201,8 @@ const styles = StyleSheet.create({
   slideMenu: {
     position: 'absolute',
     top: 0,
-    left: 0,
+    left: -25,
+    paddingLeft:45,
     height: Dimensions.get('window').height,
     width: (Dimensions.get('window').width)*(3.25/4),
     borderRadius: 9,

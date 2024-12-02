@@ -31,32 +31,49 @@ const Login: React.FC = () => {
   const { isDarkMode, setIsDarkMode } = useDarkMode();
 
   const [rememberMe, setRememberMe] = useState<boolean>(false);
-
+  const [isLoading, setIsLoading] = useState(true);
 
 
   useEffect(() => {
-    checkRememberedUser();
+    checkRememberedUser().finally(() => setIsLoading(false));
   }, []);
+
+  if (isLoading) {
+      // Display a loading spinner while checking AsyncStorage
+      return <ActivityIndicator size="large" color="#0000ff" style={{ flex: 1, justifyContent: 'center' }} />;
+  }
   
   // Check if a user is remembered and auto-login
   const checkRememberedUser = async () => {
     const storedEmail = await AsyncStorage.getItem('rememberedEmail');
     const rememberMeFlag = await AsyncStorage.getItem('rememberMe');
+    console.log('Remembered Email:', storedEmail);
+    console.log('Remember Me Flag:', rememberMeFlag);
+
     if (storedEmail && rememberMeFlag === 'true') {
-      setEmail(storedEmail);
-      autoSignIn(storedEmail);
+        setEmail(storedEmail);
+        autoSignIn(storedEmail);
     }
   };
 
+
   const autoSignIn = async (email: string) => {
     try {
-      const response = await signInWithEmailAndPassword(auth, email, password);
-      const userOccupation = await getUserOccupation(response.user.uid);
-      navigateToHome(userOccupation);
+        const storedPassword = await AsyncStorage.getItem('rememberedPassword'); // Retrieve stored password
+        if (!storedPassword) {
+            console.warn('Password not stored. Prompting user.');
+            return;
+        }
+        const response = await signInWithEmailAndPassword(auth, email, storedPassword);
+        const userOccupation = await getUserOccupation(response.user.uid);
+        navigateToHome(userOccupation);
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
   };
+
+
+
   
 
   // Sign in function
