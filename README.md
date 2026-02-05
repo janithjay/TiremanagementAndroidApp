@@ -148,6 +148,7 @@ TiremanagementAndroidApp/
 │       ├── Settings.tsx           # App settings
 │       ├── DarkModeContext.tsx    # Dark mode state management
 │       ├── notificationContext.tsx # Notification state management
+│       ├── translations.tsx       # Multi-language support
 │       ├── Header.tsx             # Reusable header component
 │       ├── Footer.tsx             # Reusable footer component
 │       ├── NavBar.tsx             # Navigation bar component
